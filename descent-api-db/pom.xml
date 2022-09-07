@@ -14,6 +14,13 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+	            <groupId>org.testcontainers</groupId>
+	            <artifactId>testcontainers-bom</artifactId>
+	            <version>1.17.3</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+	        </dependency>
+			<dependency>
 				<groupId>com.oracle.database.jdbc</groupId>
 				<artifactId>ojdbc8-production</artifactId>
 				<version>21.1.0.0</version>
@@ -22,35 +29,15 @@
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
-		<!--<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-		</dependency>-->
 		<dependency>
 			<groupId>io.github.da-trunk.naked</groupId>
-			<artifactId>sdn-test-db-common</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.testcontainers</groupId>
-			<artifactId>oracle-xe</artifactId>
-			<version>1.17.3</version>
+			<artifactId>sdn-test-db-oracle</artifactId>
+			<version>${sdn.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
 		</dependency>
-
-
 	</dependencies>
 
 	<build>
