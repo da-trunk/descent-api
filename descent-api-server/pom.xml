@@ -7,7 +7,7 @@
 	</parent>
 	<artifactId>descent-api-server</artifactId>
 	<properties>
-		<start-class>io.github.da-trunk.descent.server.config.Application</start-class>
+		<start-class>org.datrunk.descent.server.Application</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -23,11 +23,6 @@
 		<dependency>
 			<groupId>io.github.da-trunk.naked</groupId>
 			<artifactId>sdn-server</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.github.da-trunk.naked</groupId>
-			<artifactId>sdn-test-db-mysql</artifactId>
-			<version>${sdn.version}</version>
 		</dependency>
 
 		<dependency>
