@@ -29,17 +29,18 @@ import org.datrunk.naked.entities.bowman.annotation.RemoteResource;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Hero extends IdClass<String> {
   @Id
-  @Column(insertable = false, updatable = false)
+  @Column(updatable = false)
   @Nonnull
   private String id;
 
   @Nonnull
-  @Getter(onMethod_ = {@InlineAssociation})
+  @Getter(onMethod_ = { @InlineAssociation })
   private Traits traits;
 
-  @Nonnull private String ability;
+  @Nonnull
+  private String ability;
 
   @ManyToMany(fetch = FetchType.LAZY)
-  @Getter(onMethod_ = {@LinkedResource})
+  @Getter(onMethod_ = { @LinkedResource })
   private Set<Skill> skills = new HashSet<>();
 }

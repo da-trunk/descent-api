@@ -6,7 +6,7 @@ spring:
     username: test
     password: password
     database: test        
-    #url: jdbc:oracle:thin:@localhost:1521/XEPDB1
+    url: jdbc:oracle:thin:@localhost:1521/XEPDB1
     container.port: 1521
   liquibase:
     enabled: false    
@@ -14,3 +14,4 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
+    show-sql: true      

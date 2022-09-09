@@ -11,23 +11,34 @@ import lombok.ToString;
 @Embeddable
 @Getter
 @ToString
-@RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Traits {
   @Nonnull private int healthMax;
-  private int health;
+  @Nonnull private int health;
   @Nonnull private int staminaMax;
-  private int stamina;
+  @Nonnull private int stamina;
   @Nonnull private int armor;
   @Nonnull private int moveMax;
-  private int move;
+  @Nonnull private int move;
   private int attack;
   private int range;
   private int magic;
+  
+  public Traits(int health, int stamina, int move, int armor) {
+    healthMax = this.health = health;
+    staminaMax = this.stamina = stamina;
+    moveMax = this.move = move;
+    this.armor = armor;
+    this.attack = this.range = this.magic = 0;
+  }
 
   protected void setHealthMax(int healthMax) {
     this.healthMax = healthMax;
     this.health = healthMax;
+  }
+  
+  protected void setHealth(int health) {
+    this.health = health;
   }
 
   protected void setStaminaMax(int staminaMax) {
