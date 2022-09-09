@@ -1,6 +1,6 @@
 package org.datrunk.descent.db;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -54,8 +54,9 @@ public class Application implements ApplicationRunner {
   @Override
   @Transactional
   public void run(ApplicationArguments args) throws Exception {
-    HeroRandomizer heros = new HeroRandomizer(5);
-    em.persist(new ArrayList<>(heros.getAll()));
+    HeroRandomizer heroRandomizer = new HeroRandomizer(5);
+    Collection<Hero> heroes = heroRandomizer.getAll();
+    em.persist(heroes);
     em.flush();
   }
 }
