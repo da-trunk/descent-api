@@ -18,17 +18,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
     - name: Set up settings.xml for GitHub Packages
       uses: actions/setup-java@v3
       with:
         distribution: 'adopt'
         java-version: ${{ matrix.java-version }}
         server-id: 'github'
-        cache: 'maven'
-        server-username: GITHUB_USER
-        server-password: GITHUB_TOKEN
-    
+        cache: maven
+        server-username: ${{ secrets.GIT_USER }}
+        server-password: ${{ secrets.GIT_TOKEN }}        
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-
+      env:
+        GITHUB_USER: ${{ secrets.GIT_USER }}
+        GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }} 
