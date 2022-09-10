@@ -6,9 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
 import javax.transaction.Transactional;
-import org.datrunk.descent.entities.Hero;
+import org.datrunk.descent.entities.HeroCard;
 import org.datrunk.descent.entities.Skill;
-import org.datrunk.descent.entities.random.HeroRandomizer;
+import org.datrunk.descent.entities.random.HeroCardRandomizer;
 import org.datrunk.naked.db.mysql.MySqlTestContainer;
 import org.datrunk.naked.entities.random.Randomizer.Exception;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Import({Application.Config.class})
 public class Application implements ApplicationRunner {
   @EnableTransactionManagement
-  @EntityScan(basePackageClasses = {Hero.class})
+  @EntityScan(basePackageClasses = {HeroCard.class})
   @EnableAutoConfiguration
   static class Config {
     @Bean
@@ -55,23 +55,18 @@ public class Application implements ApplicationRunner {
   @Transactional
   public void run(ApplicationArguments args) throws Exception {
     deleteAll();
-    HeroRandomizer heroRandomizer = new HeroRandomizer(5);
-    heroRandomizer
-        .getSkillRandomizer()
-        .setUpdater(
-            skill -> {
-              em.persist(skill);
-              return skill;
-            });
+    HeroCardRandomizer heroRandomizer = new HeroCardRandomizer(5, em::persist);
     heroRandomizer.getAll().stream().forEach(em::persist);
     em.flush();
-    List<Hero> actual = em.createQuery("select h from Hero h", Hero.class).getResultList();
+    List<HeroCard> actual =
+        em.createQuery("select h from HeroCard h", HeroCard.class).getResultList();
     System.out.println(actual);
   }
 
   private void deleteAll() {
-    List<Hero> heroes = em.createQuery("select h from Hero h", Hero.class).getResultList();
-    for (Hero hero : heroes) em.remove(hero);
+    List<HeroCard> heroes =
+        em.createQuery("select h from HeroCard h", HeroCard.class).getResultList();
+    for (HeroCard HeroCard : heroes) em.remove(HeroCard);
     List<Skill> skills = em.createQuery("select s from Skill s", Skill.class).getResultList();
     for (Skill skill : skills) em.remove(skill);
     em.flush();

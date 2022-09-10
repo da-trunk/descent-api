@@ -1,10 +1,10 @@
 package org.datrunk.descent.graphql;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.PrintStream;
-
 import javax.persistence.EntityManager;
-
-import org.datrunk.descent.entities.Hero;
+import lombok.extern.log4j.Log4j2;
+import org.datrunk.descent.entities.HeroCard;
 import org.datrunk.descent.server.repo.HeroRepo;
 import org.datrunk.descent.server.repo.TestController;
 import org.datrunk.naked.server.repo.BaseRepositoryImpl;
@@ -27,30 +27,31 @@ import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.filter.ForwardedHeaderFilter;
 
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-
-import lombok.extern.log4j.Log4j2;
-
 @SpringBootApplication
-@Import({ Application.Config.class })
+@Import({Application.Config.class})
 @Log4j2
 public class Application extends SpringBootServletInitializer {
   @SpringBootConfiguration
-  @EntityScan(basePackageClasses = { Hero.class })
-  @EnableJpaRepositories(basePackageClasses = {
-      HeroRepo.class }, repositoryBaseClass = BaseRepositoryImpl.class, considerNestedRepositories = true)
+  @EntityScan(basePackageClasses = {HeroCard.class})
+  @EnableJpaRepositories(
+      basePackageClasses = {HeroRepo.class},
+      repositoryBaseClass = BaseRepositoryImpl.class,
+      considerNestedRepositories = true)
   @EnableHypermediaSupport(type = HypermediaType.HAL)
   @EnableAspectJAutoProxy
   @EnableTransactionManagement
   @EnableAutoConfiguration
-  @ComponentScan(basePackageClasses = { TestController.class })
+  @ComponentScan(basePackageClasses = {TestController.class})
   public static class Config {
     @Bean
     RepositoryRestConfigurer repositoryRestConfigurer(EntityManager entityManager) {
-      return RepositoryRestConfigurer.withConfig(config -> {
-        config.exposeIdsFor(
-            entityManager.getMetamodel().getEntities().stream().map(javax.persistence.metamodel.Type::getJavaType).toArray(Class[]::new));
-      });
+      return RepositoryRestConfigurer.withConfig(
+          config -> {
+            config.exposeIdsFor(
+                entityManager.getMetamodel().getEntities().stream()
+                    .map(javax.persistence.metamodel.Type::getJavaType)
+                    .toArray(Class[]::new));
+          });
     }
 
     @Bean
@@ -82,9 +83,13 @@ public class Application extends SpringBootServletInitializer {
     public void printBanner(Environment env, Class<?> sourceClass, PrintStream out) {
       log.info("-------------------- Descent API ----------------------- ");
       if (env.getProperty("spring.datasource.url") == null) {
-        throw new RuntimeException("'spring.datasource.url' is not configured! This should be specified in application.yml.");
+        throw new RuntimeException(
+            "'spring.datasource.url' is not configured! This should be specified in application.yml.");
       }
-      log.info("Starting server at [http://localhost:{}{}]", env.getProperty("server.port"), env.getProperty("spring.data.rest.base-path"));
+      log.info(
+          "Starting server at [http://localhost:{}{}]",
+          env.getProperty("server.port"),
+          env.getProperty("spring.data.rest.base-path"));
     }
   }
 

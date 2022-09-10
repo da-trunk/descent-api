@@ -1,56 +1,48 @@
 package org.datrunk.descent.entities.embedded;
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.datrunk.descent.entities.Dice;
+import org.datrunk.naked.entities.bowman.annotation.InlineAssociation;
 
 @Embeddable
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Traits {
-  @Nonnull private int healthMax;
   @Nonnull private int health;
-  @Nonnull private int staminaMax;
-  @Nonnull private int stamina;
   @Nonnull private int armor;
-  @Nonnull private int moveMax;
-  @Nonnull private int move;
-  private int attack;
+  @Nonnull private int moves;
 
+  @ElementCollection
+  @Enumerated(EnumType.STRING)
+  @Getter(onMethod_ = {@InlineAssociation})
+  private Set<Dice> attack = new HashSet<>();
+
+  @ElementCollection
+  @Enumerated(EnumType.STRING)
   @Column(name = "\"range\"", nullable = false)
-  private int range;
+  @Getter(onMethod_ = {@InlineAssociation})
+  private Set<Dice> range = new HashSet<>();
 
-  private int magic;
+  @ElementCollection
+  @Enumerated(EnumType.STRING)
+  @Getter(onMethod_ = {@InlineAssociation})
+  private Set<Dice> magic = new HashSet<>();
 
-  public Traits(int health, int stamina, int move, int armor) {
-    healthMax = this.health = health;
-    staminaMax = this.stamina = stamina;
-    moveMax = this.move = move;
-    this.armor = armor;
-    this.attack = this.range = this.magic = 0;
-  }
-
-  protected void setHealthMax(int healthMax) {
-    this.healthMax = healthMax;
-    this.health = healthMax;
-  }
-
-  protected void setHealth(int health) {
+  public Traits(int health, int moves, int armor) {
     this.health = health;
-  }
-
-  protected void setStaminaMax(int staminaMax) {
-    this.staminaMax = staminaMax;
-    this.stamina = staminaMax;
-  }
-
-  protected void setMoveMax(int moveMax) {
-    this.moveMax = moveMax;
-    this.move = moveMax;
+    this.moves = moves;
+    this.armor = armor;
   }
 }

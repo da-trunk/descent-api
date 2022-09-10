@@ -1,7 +1,7 @@
 package org.datrunk.descent.server.repo;
 
 import java.util.Set;
-import org.datrunk.descent.entities.Hero;
+import org.datrunk.descent.entities.HeroCard;
 import org.datrunk.descent.entities.Skill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -14,12 +14,12 @@ public class HeroController {
   @Autowired HeroRepo heroRepo;
 
   @QueryMapping
-  public Hero heroById(@Argument String id) {
+  public HeroCard heroById(@Argument String id) {
     return heroRepo.findById(id).get();
   }
 
   @SchemaMapping
-  public Set<Skill> skills(Hero hero) {
-    return hero.getSkills();
+  public Set<Skill> skills(HeroCard HeroCard) {
+    return HeroCard.getSkills();
   }
 }

@@ -4,7 +4,22 @@ type Query {
 
 type Hero {
   id: ID!
+  traits: Traits
   skills: [Skill]!
+  ability: String
+}
+
+type Traits {
+  healthMax: Int
+  health: Int
+  staminaMax: Int
+  stamina: Int
+  armor: Int
+  moveMax: Int
+  move: Int
+  attack: Int
+  range: Int
+  magic: Int
 }
 
 type Skill {
