@@ -1,6 +1,6 @@
 # descent-api
 
-Demo project for [spring-data-naked](../spring-data-naked).  This exposes a *GraphQL* API for the game *Descent Journeys in the Dark*.
+Demo project for [spring-data-naked](https://github.com/da-trunk/spring-data-naked).  This exposes a *GraphQL* API for the game *Descent Journeys in the Dark*.
 
 ## GraphQL
 
