@@ -9,13 +9,14 @@
 		<module>descent-api-server</module>
 		<module>descent-api-client</module>
 		<module>descent-api-db</module>
+		<module>descent-api-graphql</module>
 	</modules>
 	<name>io.github.da-trunk:${project.artifactId}</name>
 	<description>Demo project for descent-api - an API for the game Descent Journeys in the Dark</description>
 	<url>https://github.com/da-trunk/descent-api</url>
 	<properties>
 		<sdn.version>0.1-SNAPSHOT</sdn.version>
-		<spring-boot.version>2.7.0</spring-boot.version>
+		<spring-boot.version>2.7.3</spring-boot.version>
 		<liquibase.version>4.12.0</liquibase.version>
 		<lombok.version>1.18.22</lombok.version>
 
@@ -137,6 +138,18 @@
 	<build>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<configuration>
+						<excludes>
+							<exclude>
+								<groupId>org.projectlombok</groupId>
+								<artifactId>lombok</artifactId>
+							</exclude>
+						</excludes>
+					</configuration>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>

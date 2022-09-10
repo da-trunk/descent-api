@@ -20,18 +20,18 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			<dependency>
+			<!--<dependency>
 				<groupId>com.oracle.database.jdbc</groupId>
 				<artifactId>ojdbc8-production</artifactId>
 				<version>21.1.0.0</version>
 				<type>pom</type>
-			</dependency>
+			</dependency>-->
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>io.github.da-trunk.naked</groupId>
-			<artifactId>sdn-test-db-oracle</artifactId>
+			<artifactId>sdn-test-db-mysql</artifactId>
 			<version>${sdn.version}</version>
 		</dependency>
 		<dependency>
@@ -54,10 +54,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>${spring-boot.version}</version>
-				<configuration>
-					<mainClass>${start-class}</mainClass>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

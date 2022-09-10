@@ -34,13 +34,12 @@ public class Hero extends IdClass<String> {
   private String id;
 
   @Nonnull
-  @Getter(onMethod_ = { @InlineAssociation })
+  @Getter(onMethod_ = {@InlineAssociation})
   private Traits traits;
 
-  @Nonnull
-  private String ability;
+  @Nonnull private String ability;
 
   @ManyToMany(fetch = FetchType.LAZY)
-  @Getter(onMethod_ = { @LinkedResource })
+  @Getter(onMethod_ = {@LinkedResource})
   private Set<Skill> skills = new HashSet<>();
 }

@@ -1,11 +1,11 @@
 package org.datrunk.descent.entities.embedded;
 
 import javax.annotation.Nonnull;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @Embeddable
@@ -21,9 +21,12 @@ public class Traits {
   @Nonnull private int moveMax;
   @Nonnull private int move;
   private int attack;
+
+  @Column(name = "\"range\"", nullable = false)
   private int range;
+
   private int magic;
-  
+
   public Traits(int health, int stamina, int move, int armor) {
     healthMax = this.health = health;
     staminaMax = this.stamina = stamina;
@@ -36,7 +39,7 @@ public class Traits {
     this.healthMax = healthMax;
     this.health = healthMax;
   }
-  
+
   protected void setHealth(int health) {
     this.health = health;
   }

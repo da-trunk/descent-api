@@ -1,0 +1,13 @@
+type Query {
+  heroById(id: ID): Hero
+}
+
+type Hero {
+  id: ID!
+  skills: [Skill]!
+}
+
+type Skill {
+  id: ID!
+  name: String!
+}
