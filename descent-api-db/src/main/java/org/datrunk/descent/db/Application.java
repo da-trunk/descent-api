@@ -1,11 +1,14 @@
 package org.datrunk.descent.db;
 
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.sql.DataSource;
 import javax.transaction.Transactional;
+
 import org.datrunk.descent.entities.HeroCard;
 import org.datrunk.descent.entities.Skill;
 import org.datrunk.descent.entities.random.HeroCardRandomizer;
@@ -24,10 +27,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@Import({Application.Config.class})
+@Import({ Application.Config.class })
 public class Application implements ApplicationRunner {
   @EnableTransactionManagement
-  @EntityScan(basePackageClasses = {HeroCard.class})
+  @EntityScan(basePackageClasses = { HeroCard.class })
   @EnableAutoConfiguration
   static class Config {
     @Bean
@@ -36,8 +39,10 @@ public class Application implements ApplicationRunner {
     }
   }
 
-  @Autowired private JdbcTemplate jdbcTemplate;
-  @PersistenceContext private EntityManager em;
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
+  @PersistenceContext
+  private EntityManager em;
 
   @SuppressWarnings("resource")
   public static void main(String[] args) {
@@ -58,17 +63,26 @@ public class Application implements ApplicationRunner {
     HeroCardRandomizer heroRandomizer = new HeroCardRandomizer(5, em::persist);
     heroRandomizer.getAll().stream().forEach(em::persist);
     em.flush();
-    List<HeroCard> actual =
-        em.createQuery("select h from HeroCard h", HeroCard.class).getResultList();
+    List<HeroCard> actual = em.createQuery("select h from HeroCard h", HeroCard.class).getResultList();
     System.out.println(actual);
   }
 
   private void deleteAll() {
-    List<HeroCard> heroes =
-        em.createQuery("select h from HeroCard h", HeroCard.class).getResultList();
-    for (HeroCard HeroCard : heroes) em.remove(HeroCard);
-    List<Skill> skills = em.createQuery("select s from Skill s", Skill.class).getResultList();
-    for (Skill skill : skills) em.remove(skill);
+    delete(HeroCard.class);
+    delete(Skill.class);
     em.flush();
+  }
+  
+  public int truncate(String table){
+    String hql = String.format("delete from %s",table);
+    Query query = em.createQuery(hql);
+    return query.executeUpdate();
+}
+
+  private <T> void delete(Class<T> clazz) {
+    String tableName = clazz.getSimpleName();
+    List<T> objects = em.createQuery("select x from " + tableName + " x", clazz).getResultList();
+    for (T object : objects)
+      em.remove(object);
   }
 }

@@ -2,6 +2,7 @@ package org.datrunk.descent.entities;
 
 import javax.annotation.Nonnull;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,7 +22,7 @@ import org.datrunk.naked.entities.bowman.annotation.RemoteResource;
 @RequiredArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class HeroCard extends CreatureCard {
-  @OneToOne(optional = false, orphanRemoval = true)
+  @OneToOne(optional = false, orphanRemoval = true, fetch = FetchType.LAZY)
   @Getter(onMethod_ = {@InlineAssociation})
   private Skill ability;
 
