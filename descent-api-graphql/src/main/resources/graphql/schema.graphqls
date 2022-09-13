@@ -1,5 +1,6 @@
 type Query {
   heroById(id: ID): Hero
+  itemsByHero(id: ID): [Item]
 }
 
 type Hero {
@@ -25,4 +26,9 @@ type Traits {
 type Skill {
   id: ID!
   name: String!
+}
+
+type Item {
+  id: ID!
+  hero: HeroCard
 }
