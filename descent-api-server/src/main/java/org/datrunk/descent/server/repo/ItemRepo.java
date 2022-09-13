@@ -1,7 +1,6 @@
 package org.datrunk.descent.server.repo;
 
 import java.util.List;
-
 import org.datrunk.descent.entities.Item;
 import org.datrunk.naked.server.repo.BaseRepository;
 import org.springframework.data.jpa.repository.Query;

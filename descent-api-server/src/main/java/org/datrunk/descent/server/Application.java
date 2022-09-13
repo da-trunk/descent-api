@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import lombok.extern.log4j.Log4j2;
 import org.datrunk.descent.entities.HeroCard;
 import org.datrunk.descent.server.config.JerseyConfig;
+import org.datrunk.descent.server.repo.HeroItem;
 import org.datrunk.descent.server.repo.HeroRepo;
 import org.datrunk.naked.server.repo.BaseRepositoryImpl;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -34,7 +35,7 @@ import org.springframework.web.filter.ForwardedHeaderFilter;
 @Log4j2
 public class Application extends SpringBootServletInitializer {
   @SpringBootConfiguration
-  @EntityScan(basePackageClasses = {HeroCard.class})
+  @EntityScan(basePackageClasses = {HeroCard.class, HeroItem.class})
   @EnableJpaRepositories(
       basePackageClasses = {HeroRepo.class},
       repositoryBaseClass = BaseRepositoryImpl.class,

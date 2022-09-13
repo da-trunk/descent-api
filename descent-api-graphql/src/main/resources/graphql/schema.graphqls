@@ -1,26 +1,35 @@
 type Query {
-  heroById(id: ID): Hero
-  itemsByHero(id: ID): [Item]
+  heroById(id: ID!): HeroCard
+  itemsByHero(id: ID!): [Item!]
+  allItemsByHero: [HeroItem!]!
 }
 
-type Hero {
+type HeroCard {
   id: ID!
-  traits: Traits
-  skills: [Skill]!
-  ability: String
+  traits: Traits!
+  skills: [Skill!]
+  ability: String!
 }
 
 type Traits {
-  healthMax: Int
-  health: Int
-  staminaMax: Int
-  stamina: Int
-  armor: Int
-  moveMax: Int
-  move: Int
-  attack: Int
-  range: Int
-  magic: Int
+  health: Int!
+  armor: Int!
+  moves: Int!
+  attack: [DiceTuple!]!
+  range: [DiceTuple!]!
+  magic: [DiceTuple!]!
+}
+
+type DiceTuple {
+  key: String!
+  value: Dice!
+}
+
+enum Dice {
+  WHITE
+  GREEN
+  BLUE
+  BLACK
 }
 
 type Skill {
@@ -31,4 +40,9 @@ type Skill {
 type Item {
   id: ID!
   hero: HeroCard
+}
+
+type HeroItem {
+  hero: HeroCard!
+  itemId: String
 }
