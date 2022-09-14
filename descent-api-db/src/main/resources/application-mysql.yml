@@ -1,0 +1,10 @@
+spring:
+  config:
+    import:
+    - classpath:mysql.yml
+  datasource:
+    username: test
+    password: password
+    database: test        
+    #url: jdbc:mysql://localhost:3306/test
+    container.port: 3306

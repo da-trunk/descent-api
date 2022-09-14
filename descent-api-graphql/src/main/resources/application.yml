@@ -1,0 +1,64 @@
+spring:
+  config:
+    import:
+    - classpath:application-mysql.yml
+    #- classpath:application-oracle.yml
+  datasource.url: jdbc:mysql://localhost:3306/test
+  main:
+    banner-mode: 'console'
+    allow-bean-definition-overriding: true
+  application.name: test-api
+  graphql:
+    graphiql:
+      enabled: true
+      path: /graphiql  
+  data:
+    rest:
+      base-path: /graphql
+      return-body-on-create: true
+      return-body-on-update: true
+  jpa:
+    open-in-view: true
+    generate-ddl: true
+    hibernate.ddl-auto: update
+    show-sql: false
+    properties.hibernate:
+      globally_quoted_identifiers: false      
+  liquibase:
+    enabled: false
+  jersey:
+    type: filter
+  mvc.converters.preferred-json-mapper: jackson
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss
+    serialization:
+      write-dates-as-timestamps: false
+      fail-on-empty-beans: false
+    deserialization:
+      fail-on-unknown-properties: false
+    default-property-inclusion: non-null
+decorator:
+  datasource:
+    p6spy:
+      multiline: true
+      enable-logging: true
+      logging: sysout
+      log-format: '%(sql);'
+      timestamp-format: 'yyyy-MM-dd HH24:MI:SS'
+    enabled: true
+server:
+  display-name: 'Test Service'
+  compression:
+    enabled: false
+  #servlet.context-path: /service
+  port: 9080
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure.include: '*'
+  endpoint:
+    shutdown.enabled: true    
+logging.level:
+  root: warn
+  org.datrunk.descent: info
