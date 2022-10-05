@@ -9,6 +9,12 @@ spring:
     allow-bean-definition-overriding: true
   application.name: test-api
   graphql:
+    cors:
+      allowed-origins: '*'
+      allowed-methods: POST
+      allowed-headers: '*'
+      exposed-headers: '*'
+      allow-credentials: false
     graphiql:
       enabled: true
       path: /graphiql  
