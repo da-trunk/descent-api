@@ -1,51 +1,21 @@
-// // import DataTable from 'react-data-table-component';
-// import {
-//     useQuery,
-//     useQueryClient,
-// } from "react-query";
+import DataTable from 'react-data-table-component';
 
-// window.React2 = require('react');
-// console.log(window.React1 === window.React2)
+const columns = [
+    {
+        name: 'Name',
+        selector: row => row.title,
+    },
+    {
+        name: 'Health',
+        selector: row => row.year,
+    },
+];
 
+function Items(data) {
+    console.log(data.data.allItemsByHero)
+    return (<DataTable
+        columns={columns}
+        data={data.data.allItemsByHero.map(row => ({ id: row.hero.id, title: row.hero.id,  year: row.hero.traits.health}))} />);
+}
 
-// const columns = [
-//     {
-//         name: 'Title',
-//         selector: row => row.title,
-//     },
-//     {
-//         name: 'Year',
-//         selector: row => row.year,
-//     },
-// ];
-
-// const mockdata = [
-//     {
-//         id: 1,
-//         title: 'Beetlejuice',
-//         year: '1988',
-//     },
-//     {
-//         id: 2,
-//         title: 'Ghostbusters',
-//         year: '1984',
-//     },
-// ]
-
-
-// function Items() {
-//     const queryClient = useQueryClient()
-//     const query = useQuery(['items'], useItems)
-//     const { status, data, error, isFetching } = useItems();
-//     console.log(data)
-
-//     return (<b>HELLO</b>
-//     );
-// }; 
-
-// /* <DataTable
-// columns={columns}
-// data={mockdata}
-// /> */
-
-// export default Items;
+export default Items;
