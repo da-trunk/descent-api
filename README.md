@@ -22,12 +22,12 @@ Demo project for [spring-data-naked](../spring-data-naked).
         testcontainers.reuse.enable=true
         ```
         
-1. Start a database, create schema, and deploy some randomly generated test content: `mvn spring-boot:run -pl .\si-job-db`
-1. Start a spring-data-rest server: `mvn spring-boot:run -pl .\si-job-server`
-1. Open browser and navigate to [http://localhost:9080/api](http://localhost:9080/api)
+1. Start a database, create schema, and deploy some randomly generated test content: `mvn spring-boot:run -pl .\descent-api-db`
+1. Start a spring-data-rest server: `mvn spring-boot:run -pl .\descent-api-server`
+1. Open browser and navigate to http://localhost:9090/api
 1. Stop the server: *CTRL+C*
-1. Start a java-graphql server: `mvn spring-boot:run -pl .\si-job-graphql` (this requires JDK17+)
-1. Navigate to [http://localhost:9080/graphiql](http://localhost:9080/graphiql)
+1. Start a java-graphql server: `mvn spring-boot:run -pl .\descent-api-graphql` (this requires JDK17+)
+1. Navigate to http://localhost:9080/graphiql
 
 # Testing
 
