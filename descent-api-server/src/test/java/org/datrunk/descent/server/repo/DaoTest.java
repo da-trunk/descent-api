@@ -3,17 +3,12 @@ package org.datrunk.descent.server.repo;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.sql.DataSource;
 import javax.transaction.Transactional;
-import liquibase.exception.LiquibaseException;
-import org.datrunk.descent.entities.HeroCard;
-import org.datrunk.descent.entities.HeroItemClass;
-import org.datrunk.descent.entities.Item;
+import org.datrunk.descent.entities.*;
 import org.datrunk.naked.db.mysql.MySqlTestContainer;
 import org.datrunk.naked.server.repo.BaseRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +24,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -53,8 +49,8 @@ import org.springframework.web.filter.ForwardedHeaderFilter;
     classes = {DaoTest.Config.class})
 @EnableConfigurationProperties({DataSourceProperties.class})
 @ActiveProfiles("test")
-@Disabled(
-    "These test work only if the DB is running.  Execute mvn spring-boot:run -pl descent-api-server before these tests")
+//@Disabled(
+//    "These test work only if the DB is running.  Execute mvn spring-boot:run -pl descent-api-server before these tests")
 public class DaoTest {
   @Configuration
   @EntityScan(basePackageClasses = {HeroCard.class})
@@ -66,15 +62,15 @@ public class DaoTest {
   @ComponentScan
   @EnableAutoConfiguration
   static class Config {
-    boolean initialized = false;
-
-    @Bean
-    public DataSource dataSource(MySqlTestContainer db) throws LiquibaseException, SQLException {
-      if (!initialized) {
-        initialized = true;
-      }
-      return db.getDataSource();
-    }
+    //        boolean initialized = false;
+    //
+    //        public DataSource dataSource(MySqlTestContainer db) throws LiquibaseException,
+    // SQLException {
+    //            if (!initialized) {
+    //                initialized = true;
+    //            }
+    //            return db.getDataSource();
+    //        }
 
     @Bean
     RepositoryRestConfigurer repositoryRestConfigurer(EntityManager entityManager) {
@@ -105,9 +101,10 @@ public class DaoTest {
   private @PersistenceContext EntityManager em;
 
   @BeforeEach
-  void before(DataSource ds) {
+  void before(ConfigurableApplicationContext ctx) {
     assertThat(em).isNotNull();
-    assertThat(ds).isNotNull();
+    MySqlTestContainer.Factory factory = new MySqlTestContainer.Factory();
+    factory.initialize(ctx);
   }
 
   @Test
@@ -119,7 +116,6 @@ public class DaoTest {
 
   @Test
   void testItemsByHero() {
-
     final HeroCard hero = em.find(HeroCard.class, "Beregond");
     Stream.of("sword", "shield", "plate mail")
         .map(Item::new)
@@ -132,7 +128,7 @@ public class DaoTest {
     em.flush();
     {
       List<Item> actual =
-          em.createQuery("select i from Item i right join i.hero h where h.id = :id")
+          em.createQuery("select i from Item i right join i.hero h where h.id = :id ")
               .setParameter("id", "Beregond")
               .getResultList();
       assertThat(actual).hasSize(3);
