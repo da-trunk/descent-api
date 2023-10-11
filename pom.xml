@@ -242,15 +242,6 @@
 	</build>
 	<repositories>
 		<repository>
-			<id>github</id>
-			<name>Github Packages SDN</name>
-			<url>https://maven.pkg.github.com/da-trunk/spring-data-naked</url>
-			<snapshots>
-				<enabled>true</enabled>
-				<checksumPolicy>fail</checksumPolicy>
-			</snapshots>
-		</repository>
-		<repository>
 			<id>maven-snapshot</id>
 			<name>Snapshot Repository</name>
 			<url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
@@ -280,6 +271,24 @@
 		</repository>
 	</distributionManagement>
 	<profiles>
+		<profile>
+			<id>github</id>
+			<repositories>
+				<repository>
+					<id>central</id>
+					<url>https://repo1.maven.org/maven2</url>
+				</repository>
+				<repository>
+					<id>github</id>
+					<name>Github Packages SDN</name>
+					<url>https://maven.pkg.github.com/da-trunk/spring-data-naked</url>
+					<snapshots>
+						<enabled>true</enabled>
+						<checksumPolicy>fail</checksumPolicy>
+					</snapshots>
+				</repository>
+			</repositories>
+		</profile>
 		<profile>
 			<id>coverage</id>
 			<build>

@@ -49,8 +49,8 @@ import org.springframework.web.filter.ForwardedHeaderFilter;
     classes = {DaoTest.Config.class})
 @EnableConfigurationProperties({DataSourceProperties.class})
 @ActiveProfiles("test")
-//@Disabled(
-//    "These test work only if the DB is running.  Execute mvn spring-boot:run -pl descent-api-server before these tests")
+@Disabled(
+    "These test work only if the DB is running.  Execute mvn spring-boot:run -pl descent-api - server before these tests")
 public class DaoTest {
   @Configuration
   @EntityScan(basePackageClasses = {HeroCard.class})
