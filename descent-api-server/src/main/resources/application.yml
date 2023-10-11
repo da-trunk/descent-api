@@ -47,7 +47,7 @@ server:
   compression:
     enabled: false
   #servlet.context-path: /service
-  port: 9080
+  port: 9090
 management:
   endpoints:
     web:
